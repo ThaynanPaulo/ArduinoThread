@@ -1,5 +1,5 @@
-#include "Thread.h"
-#include "ThreadController.h"
+#include "Thread.hpp"
+#include "ThreadController.hpp"
 
 ThreadController::ThreadController(long _interval): Thread(){
 	cached_size = 0;

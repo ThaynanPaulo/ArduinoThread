@@ -1,4 +1,4 @@
-#include "Thread.h"
+#include "Thread.hpp"
 
 Thread::Thread(void (*callback)(void), long _interval){
 	enabled = true;
