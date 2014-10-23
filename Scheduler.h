@@ -32,13 +32,6 @@ private:
 
     public:
 
-        /*
-            IMPORTANT! Run after all calls to run()
-            Updates last_run and cache next run.
-            NOTE: This MUST be called if extending
-            this class and implementing run() method
-        */
-
         Thread(void (*callback)(void) = NULL, long _interval = 0);
 
         void runned(long time = -1);
@@ -56,7 +49,6 @@ private:
         void onRun(void (*callback)(void));
 
         // Runs Thread
-        //[REVISAR]
         void run();
 
         bool getEnabled() const { return enabled; }
@@ -76,13 +68,12 @@ public:
 
     SchedulerClass();
 
-    // run() Method is overrided
-    //[REVISAR]
+    // Runs scheduler
     void run();
 
-    // Adds a thread in the first available slot (remove first)
-    // Returns if the Thread could be added or not
-    //bool add(Thread* _thread);
+    // Creates a new thread adding in the first available slot (remove first)
+    // Returns the ThreadID
+    // The method must be implemented here because Thread Class is private
     unsigned int createThread(void (*callback)(void), long _interval) {
         Thread *t = new Thread(callback, _interval);
         thread[cached_size] = t;
@@ -91,7 +82,7 @@ public:
         return thread[cached_size-1]->getThreadID();
     }
 
-    // remove the thread (given the Thread* or ThreadID)
+    // remove the thread (given the ThreadID)
     void remove(unsigned int _id);
 
     // Removes all threads
@@ -99,11 +90,6 @@ public:
 
     // Return the quantity of Threads
     unsigned int size(bool cached = true);
-
-    // Return the I Thread on the array
-    // Returns NULL if none found
-    //[COMO ASSIM RETORNA UMA THREAD?]
-    //Thread* get(unsigned int index);
 
 };
 

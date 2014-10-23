@@ -8,7 +8,6 @@ SchedulerClass Scheduler;
 
 SchedulerClass::SchedulerClass() {
     cached_size = 0;
-
     clear();
 }
 
@@ -16,14 +15,9 @@ SchedulerClass::SchedulerClass() {
     ThreadController run() (cool stuf)
 */
 void SchedulerClass::run() {
-    /* [isto nao eh uma thread de usuario]
-     * // Run this thread before
-    if(_onRun != NULL)
-        _onRun();
-    */
     long time = millis();
     unsigned int checks = 0;
-    for(int i = 0; i < MAX_THREADS && checks <= cached_size; i++){
+    for(unsigned int i = 0; i < MAX_THREADS && checks <= cached_size; i++){
         // Object exists? Is enabled? Timeout exceeded?
         if(thread[i]){
             checks++;
@@ -32,10 +26,6 @@ void SchedulerClass::run() {
             }
         }
     }
-    /* [essa versao nao extende Thread]
-    // ThreadController extends Thread, so we should flag as runned thread
-    runned();
-    */
 }
 
 /*
@@ -73,18 +63,3 @@ unsigned int SchedulerClass::size(bool cached){
 
     return cached_size;
 }
-
-/*Thread* Scheduler::get(unsigned int index){
-    int pos = -1;
-    for(int i = 0; i < MAX_THREADS; i++){
-        if(thread[i] != NULL){
-            pos++;
-
-            if(pos == index)
-                return thread[i];
-        }
-    }
-
-    return NULL;
-}
-*/

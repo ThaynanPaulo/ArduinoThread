@@ -4,7 +4,6 @@
  * Classe Thread *
  *****************/
 
-//SchedulerClass::Thread::Thread(void (*callback)(void), long _interval) {
 SchedulerClass::Thread::Thread(void (*callback)(void), long _interval) {
     enabled = true;
     onRun(callback);
