@@ -4,6 +4,7 @@
 #define MAX_THREADS		15
 
 #include <Arduino.h>
+#include "LinkedList.h"
 
 class SchedulerClass {
 
@@ -61,7 +62,9 @@ private:
      * Classe Scheduler *
      ********************/
 
-    Thread* thread[MAX_THREADS];
+    //Thread* thread[MAX_THREADS];
+    LinkedList<Thread*> thread;
+
     unsigned int cached_size;
 
 public:
@@ -76,10 +79,14 @@ public:
     // The method must be implemented here because Thread Class is private
     unsigned int createThread(void (*callback)(void), long _interval) {
         Thread *t = new Thread(callback, _interval);
-        thread[cached_size] = t;
+        //thread[cached_size] = t;
+        thread.add(t);
         cached_size++;
+        //unsigned int id = t->getThreadID();
         delete t;
-        return thread[cached_size-1]->getThreadID();
+        //return thread[cached_size-1]->getThreadID();
+        //return id;
+        return thread.get(cached_size-1)->getThreadID();
     }
 
     // remove the thread (given the ThreadID)

@@ -8,6 +8,7 @@ SchedulerClass Scheduler;
 
 SchedulerClass::SchedulerClass() {
     cached_size = 0;
+    thread = LinkedList<Thread*>();
     clear();
 }
 
@@ -16,14 +17,19 @@ SchedulerClass::SchedulerClass() {
 */
 void SchedulerClass::run() {
     long time = millis();
-    unsigned int checks = 0;
-    for(unsigned int i = 0; i < MAX_THREADS && checks <= cached_size; i++){
+    //unsigned int checks = 0;
+    /*for(unsigned int i = 0; i < MAX_THREADS && checks <= cached_size; i++){
         // Object exists? Is enabled? Timeout exceeded?
         if(thread[i]){
             checks++;
             if(thread[i]->shouldRun(time)){
                 thread[i]->run();
             }
+        }
+    }*/
+    for(unsigned int i = 0; i < thread.size(); i++) {
+        if(thread.get(i)->shouldRun(time)){
+            thread.get(i)->run();
         }
     }
 }
@@ -34,9 +40,17 @@ void SchedulerClass::run() {
 
 void SchedulerClass::remove(unsigned int id){
     // Find Threads with the id, and removes
-    for(unsigned int i = 0; i < MAX_THREADS; i++){
+    /*for(unsigned int i = 0; i < MAX_THREADS; i++){
         if(thread[i]->getThreadID() == id){
             thread[i] = NULL;
+            cached_size--;
+            return;
+        }
+    }*/
+    for(unsigned int i = 0; i < thread.size(); i++) {
+        if(thread.get(i)->getThreadID() == id){
+            //thread[i] = NULL;
+            thread.remove(i);
             cached_size--;
             return;
         }
@@ -44,22 +58,24 @@ void SchedulerClass::remove(unsigned int id){
 }
 
 void SchedulerClass::clear(){
-    for(unsigned int i = 0; i < MAX_THREADS; i++){
+    /*for(unsigned int i = 0; i < MAX_THREADS; i++){
         thread[i] = NULL;
-    }
+    }*/
+    thread.clear();
     cached_size = 0;
 }
 
 unsigned int SchedulerClass::size(bool cached){
+    //[AJEITAR DEPOIS --- CACHED ISN'T NECESSARY]
     if(cached)
         return cached_size;
 
-    int size = 0;
+    /*int size = 0;
     for(int i = 0; i < MAX_THREADS; i++){
         if(thread[i])
             size++;
     }
-    cached_size = size;
+    cached_size = size;*/
 
     return cached_size;
 }
