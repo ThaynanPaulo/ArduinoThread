@@ -5,7 +5,7 @@
 
 #include <Arduino.h>
 
-class Scheduler {
+class SchedulerClass {
 
 private:
 
@@ -74,7 +74,7 @@ private:
 
 public:
 
-    Scheduler();
+    SchedulerClass();
 
     // run() Method is overrided
     //[REVISAR]
@@ -84,14 +84,11 @@ public:
     // Returns if the Thread could be added or not
     //bool add(Thread* _thread);
     unsigned int createThread(void (*callback)(void), long _interval) {
-             
-      Scheduler::Thread *t = new Scheduler::Thread(callback, _interval);
-
-      thread[cached_size] = t;
-
-      cached_size++;
-
-      return thread[cached_size-1]->getThreadID();
+        Thread *t = new Thread(callback, _interval);
+        thread[cached_size] = t;
+        cached_size++;
+        delete t;
+        return thread[cached_size-1]->getThreadID();
     }
 
     // remove the thread (given the Thread* or ThreadID)
@@ -109,5 +106,7 @@ public:
     //Thread* get(unsigned int index);
 
 };
+
+extern SchedulerClass Scheduler;
 
 #endif // SCHEDULER_H

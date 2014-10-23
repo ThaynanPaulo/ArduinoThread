@@ -4,7 +4,8 @@
  * Classe Thread *
  *****************/
 
-Scheduler::Thread::Thread(void (*callback)(void), long _interval) {
+//SchedulerClass::Thread::Thread(void (*callback)(void), long _interval) {
+SchedulerClass::Thread::Thread(void (*callback)(void), long _interval) {
     enabled = true;
     onRun(callback);
     _cached_next_run = 0;
@@ -15,7 +16,7 @@ Scheduler::Thread::Thread(void (*callback)(void), long _interval) {
     setInterval(_interval);
 }
 
-void Scheduler::Thread::runned(long time) {
+void SchedulerClass::Thread::runned(long time) {
     // If less than 0, than get current ticks
     if(time < 0)
         time = millis();
@@ -27,7 +28,7 @@ void Scheduler::Thread::runned(long time) {
     _cached_next_run = last_run + interval;
 }
 
-void Scheduler::Thread::setInterval(long _interval) {
+void SchedulerClass::Thread::setInterval(long _interval) {
     // Filter intervals less than 0
     interval = (_interval < 0 ? 0 : _interval);
 
@@ -35,7 +36,7 @@ void Scheduler::Thread::setInterval(long _interval) {
     _cached_next_run = last_run + interval;
 }
 
-bool Scheduler::Thread::shouldRun(long time) {
+bool SchedulerClass::Thread::shouldRun(long time) {
     // If less than 0, than get current ticks
     if(time < 0)
         time = millis();
@@ -44,11 +45,11 @@ bool Scheduler::Thread::shouldRun(long time) {
     return ((time >= _cached_next_run) && enabled);
 }
 
-void Scheduler::Thread::onRun(void (*callback)(void)) {
+void SchedulerClass::Thread::onRun(void (*callback)(void)) {
     _onRun = callback;
 }
 
-void Scheduler::Thread::run() {
+void SchedulerClass::Thread::run() {
     if(_onRun != NULL)
         _onRun();
 

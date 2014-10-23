@@ -1,10 +1,12 @@
 #include "Scheduler.h"
 
+SchedulerClass Scheduler;
+
 /********************
  * Classe Scheduler *
  ********************/
 
-Scheduler::Scheduler() {
+SchedulerClass::SchedulerClass() {
     cached_size = 0;
 
     clear();
@@ -13,7 +15,7 @@ Scheduler::Scheduler() {
 /*
     ThreadController run() (cool stuf)
 */
-void Scheduler::run() {
+void SchedulerClass::run() {
     /* [isto nao eh uma thread de usuario]
      * // Run this thread before
     if(_onRun != NULL)
@@ -39,18 +41,8 @@ void Scheduler::run() {
 /*
     List controller (boring part)
 */
-/*unsigned int createThread(void (*callback)(void), long _interval) {
 
-    Scheduler::Thread t = Scheduler::Thread(callback, _interval);
-
-    t[cached_size] = t;
-
-    cached_size++;
-
-    return thread[cached_size-1].getThreadID();
-}*/
-
-void Scheduler::remove(unsigned int id){
+void SchedulerClass::remove(unsigned int id){
     // Find Threads with the id, and removes
     for(unsigned int i = 0; i < MAX_THREADS; i++){
         if(thread[i]->getThreadID() == id){
@@ -61,14 +53,14 @@ void Scheduler::remove(unsigned int id){
     }
 }
 
-void Scheduler::clear(){
+void SchedulerClass::clear(){
     for(unsigned int i = 0; i < MAX_THREADS; i++){
         thread[i] = NULL;
     }
     cached_size = 0;
 }
 
-unsigned int Scheduler::size(bool cached){
+unsigned int SchedulerClass::size(bool cached){
     if(cached)
         return cached_size;
 
