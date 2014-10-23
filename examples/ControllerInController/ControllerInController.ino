@@ -1,5 +1,5 @@
-#include <Thread.h>
-#include <ThreadController.h>
+#include "Thread.h"
+#include "ThreadController.h"
 
 int ledPin = 13;
 
@@ -49,7 +49,7 @@ void setup(){
 	// Configure hisThread
 	hisThread.onRun(boringCallback);
 	hisThread.setInterval(250);
-	
+
 	// Configure blinkLedThread
 	blinkLedThread.onRun(blinkLed);
 	blinkLedThread.setInterval(100);
@@ -67,6 +67,7 @@ void setup(){
 }
 
 void loop(){
+  
 	// run ThreadController
 	// this will check every thread inside ThreadController,
 	// if it should run. If yes, he will run it;
