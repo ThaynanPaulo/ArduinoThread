@@ -1,10 +1,8 @@
-#include "Scheduler.h"
+#include <Scheduler.h>
 
 typedef unsigned int ui;
 
 int ledPin = 13;
-
-Scheduler sched;
 
 // callback for myThread
 void niceCallback(){
@@ -34,12 +32,11 @@ void setup() {
 	pinMode(ledPin, OUTPUT);
 
 	// Configure myThread
-        ui niceID = sched.createThread(niceCallback, 500);
+        ui niceID = Scheduler.createThread(niceCallback, 500);
 
-        ui boringID = sched.createThread(boringCallback, 250);
+        ui boringID = Scheduler.createThread(boringCallback, 250);
 
-        ui blinkID = sched.createThread(blinkLed, 100);
-
+        ui blinkID = Scheduler.createThread(blinkLed, 100);
 }
 
 void loop() {
@@ -47,7 +44,7 @@ void loop() {
   	// run ThreadController
 	// this will check every thread inside ThreadController,
 	// if it should run. If yes, he will run it;
-	sched.run();
+        Scheduler.run();
 
 	// Rest of code
 	float h = 3.1415;
